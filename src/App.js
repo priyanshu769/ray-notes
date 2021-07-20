@@ -1,12 +1,16 @@
-import logo from './logo.svg';
-import './App.css';
+import './App.css'
+import { Routes, Route } from 'react-router-dom'
+import { PrivacyPolicy, Notes } from './pages/index'
 
 function App() {
   return (
     <div className="App">
-      <p>Ray notes in development.</p>
+      <Routes>
+        <Route path="/" element={<Notes />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+      </Routes>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
