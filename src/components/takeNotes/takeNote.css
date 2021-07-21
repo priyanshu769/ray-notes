@@ -1,0 +1,62 @@
+.takeNote {
+  width: 15rem;
+  border: 1px solid #000000;
+  padding: 0.5rem;
+}
+
+.addNoteInput {
+    padding: 0.5rem 1rem;
+    margin: 0.5rem;
+    background-color: transparent;
+    color: #000000;
+    border: none;
+    border-bottom: 1px solid black;
+}
+
+.addNoteContentInput {
+    width: 10rem;
+    height: auto;
+    resize: none;
+}
+
+.addNoteBtn {
+    width: 4rem;
+    padding: 0.3rem;
+    margin: 1px;
+    background-color: #000000;
+    color: white;
+    border-radius: 10%;
+    cursor: pointer;
+}
+/* Color Button */
+.Colors {
+    background-color: #000000;
+    width: fit-content;
+    margin: auto;
+    padding: 0 1.5rem;
+  }
+  .colorBtn {
+    cursor: pointer;
+    padding: 1rem;
+    border-radius: 100%;
+    border: none;
+    margin: 5px 2px;
+    outline: none;
+  }
+  .red {
+    background-color: #e84545;
+  }
+  .green {
+    background-color: #00b8a9;
+  }
+  .blue {
+    background-color: #3490de;
+  }
+  .yellow {
+    background-color: #f9ed69;
+  }
+  /* Pinned */
+  .pinned {
+    color: red;
+  }
+  
