@@ -1,2 +1,4 @@
 export { PrivacyPolicy } from './PrivacyPolicy/PrivacyPolicy'
-export { Notes } from './Notes/Notes'
+export { Homepage } from './Homepage/Homepage'
+export { CreateNote } from './CreateNote/CreateNote'
+export { FullNote } from './FullNote/FullNote'

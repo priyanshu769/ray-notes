@@ -1,13 +1,15 @@
 import './App.css'
-import { Routes, Route } from 'react-router-dom'
-import { PrivacyPolicy, Notes } from './pages/index'
-import { TakeNote } from './components/index'
-function App() {
+import { Routes, Route, Link } from 'react-router-dom'
+import { PrivacyPolicy, Homepage, CreateNote, FullNote } from './pages/index'
+const App = () => {
   return (
     <div className="App">
-      <TakeNote />
+    <Link to="/">Home</Link>
+    <Link to="/create-note">Create</Link>
       <Routes>
-        <Route path="/" element={<Notes />} />
+        <Route path="/" element={<Homepage />} />
+        <Route path="/create-note" element={<CreateNote />} />
+        <Route path="/note/:id" element={<FullNote />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
       </Routes>
     </div>

@@ -16,4 +16,4 @@ export const useApp = () => {
   return useContext(AppContext)
 }
 
-export default AppProvider;
+export default AppProvider

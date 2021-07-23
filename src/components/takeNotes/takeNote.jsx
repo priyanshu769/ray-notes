@@ -1,35 +1,31 @@
 import { useState } from 'react'
-import './takeNote.css'
+import './TakeNote.css'
 
 export const TakeNote = (props) => {
   const [showColorOptions, setShowColorOptions] = useState(false)
-  const [textarea, setTextarea] = useState('')
-
-  const autoTextareaHeight = () => {
-    if (textarea.length < 80) {
-      return '100px'
-    }
-    if (textarea.length >= 70) {
-      return `${textarea.length}px`
-    }
-  }
 
   return (
-    <div className="takeNote">
+    <div style={{ backgroundColor: props.takeNoteColor }} className="takeNote">
       <input
         placeholder="Title"
         className="addNoteInput addNoteTitleInput"
         name="title"
+        value={props.titleValue}
         onChange={props.onTitleChange}
       />
       <textarea
         placeholder="Content"
         className="addNoteInput addNoteContentInput"
-        style={{ height: autoTextareaHeight() }}
+        style={{ height: props.textareaHeight }}
         name="content"
-        onChange={(props.onContentChange, (e) => setTextarea(e.target.value))}
+        value={props.contentValue}
+        onChange={props.onContentChange}
       ></textarea>
-      <button className="addNoteBtn" onClick={props.addNoteBtnClick}>
+      <button
+        type="submit"
+        className="addNoteBtn"
+        onClick={props.addNoteBtnClick}
+      >
         Add
       </button>
       <button
@@ -40,7 +36,7 @@ export const TakeNote = (props) => {
         Color
       </button>
       <button
-        className={(props.pinBtn, 'addNoteBtn')}
+        className={props.pinBtn}
         onClick={props.pinBtnClick}
         name="pin"
       >
@@ -51,24 +47,29 @@ export const TakeNote = (props) => {
         className="Colors"
       >
         <button
-          onClick={props.function}
+          onClick={props.colorChosen}
           name="red"
           className="colorBtn red"
         ></button>
         <button
-          onClick={props.function}
+          onClick={props.colorChosen}
           name="green"
           className="colorBtn green"
         ></button>
         <button
-          onClick={props.function}
+          onClick={props.colorChosen}
           name="blue"
           className="colorBtn blue"
         ></button>
         <button
-          onClick={props.function}
+          onClick={props.colorChosen}
           name="yellow"
           className="colorBtn yellow"
+        ></button>
+        <button
+          onClick={props.colorChosen}
+          name="white"
+          className="colorBtn white"
         ></button>
       </div>
     </div>
