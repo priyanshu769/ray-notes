@@ -23,13 +23,13 @@ export const Homepage = () => {
 
   const colorChosen = (e) => {
     console.log(e.target.name)
-    if (e.target.name === "red") {
+    if (e.target.name === 'red') {
       return setNoteColor('#ff2e63')
     }
     if (e.target.name === 'green') {
       return setNoteColor('#00b8a9')
     }
-    if (e.target.name === "blue") {
+    if (e.target.name === 'blue') {
       return setNoteColor('#3490de')
     }
     if (e.target.name === 'yellow') {
@@ -40,61 +40,86 @@ export const Homepage = () => {
     }
   }
 
-  useEffect(()=> {
-    (()=> {
-      if (newPostContent.length>128){
-        dispatch({type: "SET_TEMPORARY_DATA", payload: {
-          _id: Math.floor(Math.random() * 69),
-          title: newPostTitle,
-          content: newPostContent,
-          color: noteColor,
-          pinned: pinBtn
-        }})
+  useEffect(() => {
+    ;(() => {
+      if (newPostContent.length > 128) {
+        dispatch({
+          type: 'SET_TEMPORARY_DATA',
+          payload: {
+            _id: Math.floor(Math.random() * 69),
+            title: newPostTitle,
+            content: newPostContent,
+            color: noteColor,
+            pinned: pinBtn,
+          },
+        })
         navigate('/create-note')
       }
     })()
   }, [newPostContent, dispatch, navigate, newPostTitle, noteColor, pinBtn])
 
-  const unPinnedNotes = state.notes.filter((note) => note.pinned === false).reverse();
-  const pinnedNotes = state.notes.filter((note) => note.pinned === true).reverse();
+  const unPinnedNotes = state.notes
+    .filter((note) => note.pinned === false)
+    .reverse()
+  const pinnedNotes = state.notes
+    .filter((note) => note.pinned === true)
+    .reverse()
 
   return (
     <div className="homepage">
       <TakeNote
         onTitleChange={(e) => setNewPostTitle(e.target.value)}
         onContentChange={(e) => setNewPostContent(e.target.value)}
-        pinBtnClick={()=> setPinBtn(!pinBtn)}
+        pinBtnClick={() => setPinBtn(!pinBtn)}
         textareaHeight={autoTextareaHeight()}
-        pinBtn={pinBtn ? "pinOn addNoteBtn": "pinOff addNoteBtn"}
+        pinBtn={pinBtn ? 'pinOn addNoteBtn' : 'pinOff addNoteBtn'}
         colorChosen={colorChosen}
         takeNoteColor={noteColor}
         titleValue={newPostTitle}
         contentValue={newPostContent}
         addNoteBtnClick={() => {
           dispatch({
-            type: 'ADD_NOTES',
+            type: 'ADD_NOTE',
             payload: {
               _id: Math.floor(Math.random() * 69),
               title: newPostTitle,
               content: newPostContent,
               color: noteColor,
-              pinned: pinBtn
+              pinned: pinBtn,
             },
           })
           setNewPostTitle('')
           setNewPostContent('')
+          setPinBtn(false)
+          setNoteColor('#ffffff')
         }}
       />
       {pinnedNotes.map((note) => {
         return (
           <Note
-            title={note.title.length<=20 ? note.title : `${note.title.slice(0, 20)}...`}
-            content={note.content.length<=128 ? note.content : note.content.slice(0, 160)}
+            title={
+              note.title.length <= 20
+                ? note.title
+                : `${note.title.slice(0, 20)}...`
+            }
+            content={
+              note.content.length <= 128
+                ? note.content
+                : note.content.slice(0, 160)
+            }
             noteId={note._id}
             contentLength={note.content.length}
             noteBg={note.color}
+            pinned={note.pinned}
+            editBtnClick={() => {
+              setNewPostTitle(note.title)
+              setNewPostContent(note.content)
+              setNoteColor(note.color)
+              setPinBtn(note.pinned)
+              dispatch({ type: 'DELETE_NOTE', payload: note })
+            }}
             deleteBtnClick={() =>
-              dispatch({ type: 'DELETE_NOTES', payload: note })
+              dispatch({ type: 'DELETE_NOTE', payload: note })
             }
           />
         )
@@ -102,13 +127,29 @@ export const Homepage = () => {
       {unPinnedNotes.map((note) => {
         return (
           <Note
-            title={note.title.length<=20 ? note.title : `${note.title.slice(0, 20)}...`}
-            content={note.content.length<=128 ? note.content : note.content.slice(0, 160)}
+            title={
+              note.title.length <= 20
+                ? note.title
+                : `${note.title.slice(0, 20)}...`
+            }
+            content={
+              note.content.length <= 128
+                ? note.content
+                : note.content.slice(0, 160)
+            }
             noteId={note._id}
             contentLength={note.content.length}
             noteBg={note.color}
+            pinned={note.pinned}
+            editBtnClick={() => {
+              setNewPostTitle(note.title)
+              setNewPostTitle(note.content)
+              setNoteColor(note.color)
+              setPinBtn(note.pinned)
+              dispatch({ type: 'DELETE_NOTE', payload: note })
+            }}
             deleteBtnClick={() =>
-              dispatch({ type: 'DELETE_NOTES', payload: note })
+              dispatch({ type: 'DELETE_NOTE', payload: note })
             }
           />
         )

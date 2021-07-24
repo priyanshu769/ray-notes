@@ -58,7 +58,7 @@ export const CreateNote = () => {
           name="add note"
           onClick={() => {
             dispatch({
-              type: 'ADD_NOTES',
+              type: 'ADD_NOTE',
               payload: {
                 _id: Math.floor(Math.random() * 69),
                 title: newPostTitle,

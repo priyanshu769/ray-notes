@@ -63,13 +63,18 @@ export const reducer = (state, action) => {
   switch (action.type) {
     case 'SET_PROFILE':
       return state
-    case 'ADD_NOTES':
+    case 'ADD_NOTE':
       return { ...state, notes: [...state.notes, action.payload] }
-    case 'DELETE_NOTES':
+    case 'DELETE_NOTE':
       return {
         ...state,
         notes: state.notes.filter((note) => note._id !== action.payload._id),
       }
+      case 'EDIT_NOTE':
+        return {
+          ...state,
+          notes: state.notes.map(note => note._id === action.payload._id ? {...note, ...action.payload} : note)
+        }
     case 'SET_TEMPORARY_DATA':
       return { ...state, temporaryData: action.payload }
     default:

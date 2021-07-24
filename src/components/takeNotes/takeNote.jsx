@@ -35,11 +35,7 @@ export const TakeNote = (props) => {
       >
         Color
       </button>
-      <button
-        className={props.pinBtn}
-        onClick={props.pinBtnClick}
-        name="pin"
-      >
+      <button className={props.pinBtn} onClick={props.pinBtnClick} name="pin">
         Pin
       </button>
       <div

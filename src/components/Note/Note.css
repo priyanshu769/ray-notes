@@ -5,6 +5,7 @@
   color: #000000;
   text-align: left;
   border: 1px solid #000000;
+  position: relative;
 }
 
 .context {
@@ -32,4 +33,10 @@
   color: #ffffff;
   border-radius: 10%;
   cursor: pointer;
+}
+
+.pinnedBtn {
+  position: absolute;
+  top: 5px;
+  right: 5px;
 }
