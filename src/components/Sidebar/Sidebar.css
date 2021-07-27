@@ -1,0 +1,53 @@
+.sidebar {
+  position: fixed;
+  z-index: 10;
+  text-align: left;
+  margin: 0.5rem 0;
+  padding: 0 0 0 1rem;
+  width: 15%;
+  height: 97vh;
+  overflow: scroll;
+}
+
+.sidebar::-webkit-scrollbar {
+  width: 0.5rem;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background: #000;
+}
+
+.profileHeadline {
+  font-weight: bold;
+}
+
+.profileName {
+  font-size: 24px;
+  font-weight: bolder;
+}
+
+.navLinkLi {
+  list-style-type: none;
+  margin: 0 -2.5rem;
+  padding: 0.5rem 0;
+}
+
+.navLink {
+  color: #11999e;
+  text-decoration: none;
+  font-weight: bold;
+  margin: 1rem 0 0 0;
+}
+
+.noteTitleLi {
+  list-style-type: none;
+  margin: 0 -3rem;
+  font-size: 20px;
+  border-bottom: 1px solid #000000;
+  width: fit-content;
+}
+
+.noteTitleBtn {
+  background: none;
+  border: none;
+}

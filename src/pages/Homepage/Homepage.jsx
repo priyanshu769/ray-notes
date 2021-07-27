@@ -14,7 +14,7 @@ export const Homepage = () => {
 
   const autoTextareaHeight = () => {
     if (newPostContent.length < 128) {
-      return '8rem'
+      return '9rem'
     }
     if (newPostContent.length >= 128) {
       return `${newPostContent.length}px`

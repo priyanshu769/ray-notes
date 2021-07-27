@@ -44,7 +44,7 @@ export const CreateNote = () => {
   }, [])
 
   return (
-    <div>
+    <div className="createNote">
       <div className="createNoteFirstRow">
         <input
           className="createNoteInput createNoteInputTitle"
