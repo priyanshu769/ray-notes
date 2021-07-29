@@ -1,0 +1,27 @@
+.loginDiv {
+    width: 17rem;
+    margin: 0 auto;
+    align-items: center;
+    text-align: center;
+    border: 1px solid #000000;
+}
+
+.signupDiv {
+    width: 17rem;
+    margin: 0 auto;
+    align-items: center;
+    text-align: center;
+    border: 1px solid #000000;
+}
+
+.loginInput {
+    width: 15rem;
+    padding: 0.5rem;
+    margin: 0.5rem;
+}
+
+.loginBtn {
+    width: 16.3rem;
+    padding: 0.5rem;
+    margin: 0.5rem;
+}

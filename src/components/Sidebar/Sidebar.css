@@ -7,6 +7,7 @@
   width: 15%;
   height: 97vh;
   overflow: scroll;
+  overflow-y: hidden;
 }
 
 .sidebar::-webkit-scrollbar {

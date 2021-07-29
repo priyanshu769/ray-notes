@@ -2,81 +2,46 @@ export const initialState = {
   notes: [
     {
       _id: 'n123',
-      title: 'My Note 1',
+      title: 'Note Example',
       content:
-        'Lorem Ipsum and bla bla. Lorem Ipsum and bla bla. Lorem Ipsum and bla bla. Lorem Ipsum and bla bla.Lorem Ipsum and bla bla. Lorem Ipsum and bla bla.Lorem Ipsum and bla bla.Lorem Ipsum and bla bla.Lorem Ipsum and bla bla.Lorem Ipsum and bla bla.Lorem Ipsum and bla bla.Lorem Ipsum and bla bla. Lorem Ipsum and bla bla. Lorem Ipsum and bla bla. Lorem Ipsum and bla bla.Lorem Ipsum and bla bla.Lorem Ipsum and bla bla. ',
-      color: '#ff2e63',
-      pinned: true,
-      user: {
-        userId: 'u123',
-      },
-    },
-    {
-      _id: 'n124',
-      title: 'My Note 2',
-      content: 'Lorem Ipsum and bla bla 2.',
-      color: '#00b8a9',
+        'Your note will look like this. Go create your first Note',
+      color: '#ffffff',
       pinned: false,
       user: {
         userId: 'u123',
       },
-    },
-    {
-      _id: 'n125',
-      title: 'My Note 3',
-      content: 'Lorem Ipsum and bla bla 3.',
-      color: '#3490de',
-      pinned: false,
-      user: {
-        userId: 'u123',
-      },
-    },
-    {
-      _id: 'n126',
-      title: 'My Note 4',
-      content: 'Lorem Ipsum and bla bla 4.',
-      color: '#f9ed69',
-      pinned: false,
-      user: {
-        userId: 'u123',
-      },
-    },
-    {
-      _id: 'n127',
-      title: 'My Note 5',
-      content: 'Lorem Ipsum and bla bla 5.',
-      color: '#ff2e63',
-      pinned: true,
-      user: {
-        userId: 'u123',
-      },
-    },
+    }
   ],
   profile: {
     userId: 'u123',
     name: 'James Bucky Barns',
   },
+  loggedInToken: null,
   temporaryData: null,
 }
 
 export const reducer = (state, action) => {
   switch (action.type) {
     case 'SET_PROFILE':
-      return state
-    case 'ADD_NOTE':
-      return { ...state, notes: [...state.notes, action.payload] }
-    case 'DELETE_NOTE':
-      return {
-        ...state,
-        notes: state.notes.filter((note) => note._id !== action.payload._id),
-      }
-      case 'EDIT_NOTE':
-        return {
-          ...state,
-          notes: state.notes.map(note => note._id === action.payload._id ? {...note, ...action.payload} : note)
-        }
-    case 'SET_TEMPORARY_DATA':
-      return { ...state, temporaryData: action.payload }
+      return {...state, profile: action.payload}
+      case 'SET_NOTES':
+        return { ...state, notes: action.payload }
+        case 'ADD_NOTE':
+          return { ...state, notes: [...state.notes, action.payload] }
+          case 'DELETE_NOTE':
+            return {
+              ...state,
+              notes: state.notes.filter((note) => note._id !== action.payload._id),
+            }
+            case 'EDIT_NOTE':
+              return {
+                ...state,
+                notes: state.notes.map(note => note._id === action.payload._id ? {...note, ...action.payload} : note)
+              }
+              case 'SET_TEMPORARY_DATA':
+                return { ...state, temporaryData: action.payload }
+                case 'SET_LOGGEDIN_TOKEN':
+                  return { ...state, loggedInToken: action.payload }
     default:
       break
   }

@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import { useApp } from '../../contexts/AppContext'
 import { TakeNote, Note } from '../../components/index'
 import { useNavigate } from 'react-router'
+import axios from 'axios'
 
 export const Homepage = () => {
   const { state, dispatch } = useApp()
@@ -11,7 +12,7 @@ export const Homepage = () => {
   const [newPostContent, setNewPostContent] = useState('')
   const [noteColor, setNoteColor] = useState('#ffffff')
   const [pinBtn, setPinBtn] = useState(false)
-
+  // const [noteAddedStatus, setNoteAddedStatus] = useState(null)
   const autoTextareaHeight = () => {
     if (newPostContent.length < 128) {
       return '9rem'
@@ -39,6 +40,21 @@ export const Homepage = () => {
       return setNoteColor('#ffffff')
     }
   }
+  useEffect(() => {
+    ;(async () => {
+      try {
+        const notesRes = await axios.get(
+          'http://raynotes-api.herokuapp.com/notes',
+          { headers: { Authorization: state.loggedInToken } },
+        )
+        if (notesRes.data.success === true) {
+          return dispatch({ type: 'SET_NOTES', payload: notesRes.data.notes })
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    })()
+  }, [state.loggedInToken, dispatch])
 
   useEffect(() => {
     ;(() => {
@@ -57,6 +73,44 @@ export const Homepage = () => {
       }
     })()
   }, [newPostContent, dispatch, navigate, newPostTitle, noteColor, pinBtn])
+
+  const addNoteHandler = async () => {
+    const noteToAdd = {
+      title: newPostTitle,
+      content: newPostContent,
+      color: noteColor,
+      pinned: pinBtn,
+      user: {
+        userId: state.profile.userId,
+      },
+    }
+    console.log(noteToAdd)
+    try {
+      const noteAdded = await axios.post(
+        'http://raynotes-api.herokuapp.com/notes',
+        noteToAdd,
+        { headers: { Authorization: state.loggedInToken } },
+      )
+      console.log(noteAdded)
+      if (noteAdded.data.success) {
+        dispatch({ type: 'ADD_NOTE', payload: noteAdded.data.noteAdded })
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const deleteNoteHandler = async(noteId) => {
+    try{
+      const deleteNote = await axios.delete(`http://raynotes-api.herokuapp.com/notes/${noteId}`, { headers: { Authorization: state.loggedInToken } })
+      console.log(deleteNote)
+      if (deleteNote.data.success){
+        dispatch({ type: 'DELETE_NOTE', payload: deleteNote.data.note })
+      }
+    } catch (error){
+      console.log(error)
+    }
+  }
 
   const unPinnedNotes = state.notes
     .filter((note) => note.pinned === false)
@@ -78,16 +132,7 @@ export const Homepage = () => {
         titleValue={newPostTitle}
         contentValue={newPostContent}
         addNoteBtnClick={() => {
-          dispatch({
-            type: 'ADD_NOTE',
-            payload: {
-              _id: Math.floor(Math.random() * 69),
-              title: newPostTitle,
-              content: newPostContent,
-              color: noteColor,
-              pinned: pinBtn,
-            },
-          })
+          addNoteHandler()
           setNewPostTitle('')
           setNewPostContent('')
           setPinBtn(false)
@@ -100,7 +145,7 @@ export const Homepage = () => {
             title={
               note.title.length <= 20
                 ? note.title
-                : `${note.title.slice(0, 20)}...`
+                : `${note.title.slice(0, 15)}...`
             }
             content={
               note.content.length <= 128
@@ -111,15 +156,15 @@ export const Homepage = () => {
             contentLength={note.content.length}
             noteBg={note.color}
             pinned={note.pinned}
-            editBtnClick={() => {
-              setNewPostTitle(note.title)
-              setNewPostContent(note.content)
-              setNoteColor(note.color)
-              setPinBtn(note.pinned)
-              dispatch({ type: 'DELETE_NOTE', payload: note })
-            }}
+            // editBtnClick={() => {
+            //   setNewPostTitle(note.title)
+            //   setNewPostContent(note.content)
+            //   setNoteColor(note.color)
+            //   setPinBtn(note.pinned)
+            //   dispatch({ type: 'DELETE_NOTE', payload: note })
+            // }}
             deleteBtnClick={() =>
-              dispatch({ type: 'DELETE_NOTE', payload: note })
+              deleteNoteHandler(note._id)
             }
           />
         )
@@ -130,7 +175,7 @@ export const Homepage = () => {
             title={
               note.title.length <= 20
                 ? note.title
-                : `${note.title.slice(0, 20)}...`
+                : `${note.title.slice(0, 15)}...`
             }
             content={
               note.content.length <= 128
@@ -141,15 +186,15 @@ export const Homepage = () => {
             contentLength={note.content.length}
             noteBg={note.color}
             pinned={note.pinned}
-            editBtnClick={() => {
-              setNewPostTitle(note.title)
-              setNewPostTitle(note.content)
-              setNoteColor(note.color)
-              setPinBtn(note.pinned)
-              dispatch({ type: 'DELETE_NOTE', payload: note })
-            }}
+            // editBtnClick={() => {
+            //   setNewPostTitle(note.title)
+            //   setNewPostTitle(note.content)
+            //   setNoteColor(note.color)
+            //   setPinBtn(note.pinned)
+            //   dispatch({ type: 'DELETE_NOTE', payload: note })
+            // }}
             deleteBtnClick={() =>
-              dispatch({ type: 'DELETE_NOTE', payload: note })
+              deleteNoteHandler(note._id)
             }
           />
         )

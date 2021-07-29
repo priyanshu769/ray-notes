@@ -1,6 +1,7 @@
 import './CreateNote.css'
 import { useState, useEffect, useRef } from 'react'
 import { useApp } from '../../contexts/AppContext'
+import axios from 'axios'
 
 export const CreateNote = () => {
   const { state, dispatch } = useApp()
@@ -43,6 +44,32 @@ export const CreateNote = () => {
     contentFocus.current.focus();
   }, [])
 
+  const addNoteHandler = async () => {
+    const noteToAdd = {
+      title: newPostTitle,
+      content: newPostContent,
+      color: noteColor,
+      pinned: pinBtn,
+      user: {
+        userId: state.profile.userId,
+      },
+    }
+    console.log(noteToAdd)
+    try {
+      const noteAdded = await axios.post(
+        'http://raynotes-api.herokuapp.com/notes',
+        noteToAdd,
+        { headers: { Authorization: state.loggedInToken } },
+      )
+      console.log(noteAdded)
+      if (noteAdded.data.success) {
+        dispatch({ type: 'ADD_NOTE', payload: noteAdded.data.noteAdded })
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
     <div className="createNote">
       <div className="createNoteFirstRow">
@@ -57,18 +84,11 @@ export const CreateNote = () => {
           className="createNoteBtn"
           name="add note"
           onClick={() => {
-            dispatch({
-              type: 'ADD_NOTE',
-              payload: {
-                _id: Math.floor(Math.random() * 69),
-                title: newPostTitle,
-                content: newPostContent,
-                color: noteColor,
-                pinned: pinBtn,
-              },
-            })
+            addNoteHandler()
             setNewPostTitle('')
             setNewPostContent('')
+            setNoteColor('#ffffff')
+            setPinBtn(false)
           }}
         >
           Add

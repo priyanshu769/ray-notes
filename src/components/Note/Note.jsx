@@ -14,10 +14,13 @@ export const Note = (props) => {
       <button className="noteBtn" onClick={props.deleteBtnClick}>
         Delete
       </button>
-      <button className="noteBtn" onClick={props.editBtnClick}>
+      {/*<button className="noteBtn" onClick={props.editBtnClick}>
         Edit
-      </button>
-      <span className="pinnedBtn" style={{display: props.pinned ? "block" : "none"}}>
+  </button>*/}
+      <span
+        className="pinnedBtn"
+        style={{ display: props.pinned ? 'block' : 'none' }}
+      >
         <FaThumbtack />
       </span>
     </div>
