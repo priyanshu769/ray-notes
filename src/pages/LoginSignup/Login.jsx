@@ -17,7 +17,7 @@ export const Login = () => {
         dispatch({ type: 'SET_LOGGEDIN_TOKEN', payload: token })
         try {
           const user = await axios.get(
-            'http://raynotes-api.herokuapp.com/user',
+            'https://raynotes-api.herokuapp.com/user',
             {
               headers: { Authorization: token },
             },

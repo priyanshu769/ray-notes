@@ -57,7 +57,7 @@ export const CreateNote = () => {
     console.log(noteToAdd)
     try {
       const noteAdded = await axios.post(
-        'http://raynotes-api.herokuapp.com/notes',
+        'https://raynotes-api.herokuapp.com/notes',
         noteToAdd,
         { headers: { Authorization: state.loggedInToken } },
       )

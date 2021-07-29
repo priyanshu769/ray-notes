@@ -44,7 +44,7 @@ export const Homepage = () => {
     ;(async () => {
       try {
         const notesRes = await axios.get(
-          'http://raynotes-api.herokuapp.com/notes',
+          'https://raynotes-api.herokuapp.com/notes',
           { headers: { Authorization: state.loggedInToken } },
         )
         if (notesRes.data.success === true) {
@@ -87,7 +87,7 @@ export const Homepage = () => {
     console.log(noteToAdd)
     try {
       const noteAdded = await axios.post(
-        'http://raynotes-api.herokuapp.com/notes',
+        'https://raynotes-api.herokuapp.com/notes',
         noteToAdd,
         { headers: { Authorization: state.loggedInToken } },
       )
@@ -102,7 +102,7 @@ export const Homepage = () => {
 
   const deleteNoteHandler = async(noteId) => {
     try{
-      const deleteNote = await axios.delete(`http://raynotes-api.herokuapp.com/notes/${noteId}`, { headers: { Authorization: state.loggedInToken } })
+      const deleteNote = await axios.delete(`https://raynotes-api.herokuapp.com/notes/${noteId}`, { headers: { Authorization: state.loggedInToken } })
       console.log(deleteNote)
       if (deleteNote.data.success){
         dispatch({ type: 'DELETE_NOTE', payload: deleteNote.data.note })

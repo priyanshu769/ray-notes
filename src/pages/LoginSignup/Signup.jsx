@@ -33,7 +33,7 @@ export const Signup = () => {
     const newUser = { name: name, email: email, password: password }
     try {
       const signedUp = await axios.post(
-        'http://raynotes-api.herokuapp.com/signup',
+        'https://raynotes-api.herokuapp.com/signup',
         newUser,
       )
       signedUp.data.success && executeIfSignedUp(signedUp)

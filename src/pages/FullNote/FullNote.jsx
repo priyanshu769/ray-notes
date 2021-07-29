@@ -11,7 +11,7 @@ export const FullNote = () => {
   const deleteNoteHandler = async (noteId) => {
     try {
       const deleteNote = await axios.delete(
-        `http://raynotes-api.herokuapp.com/notes/${noteId}`,
+        `https://raynotes-api.herokuapp.com/notes/${noteId}`,
         { headers: { Authorization: state.loggedInToken } },
       )
       console.log(deleteNote)
