@@ -2,6 +2,7 @@ import './CreateNote.css'
 import { useState, useEffect, useRef } from 'react'
 import { useApp } from '../../contexts/AppContext'
 import axios from 'axios'
+import { Sidebar } from '../../components'
 
 export const CreateNote = () => {
   const { state, dispatch } = useApp()
@@ -28,14 +29,14 @@ export const CreateNote = () => {
   }
 
   useEffect(() => {
-    ;(() => {
+    ; (() => {
       const temporaryData = state.temporaryData
       if (temporaryData) {
         setNewPostTitle(temporaryData.title)
         setNewPostContent(temporaryData.content)
         setNoteColor(temporaryData.color)
         setPinBtn(temporaryData.pinned)
-        dispatch({type: "SET_TEMPORARY_DATA", payload: null})
+        dispatch({ type: "SET_TEMPORARY_DATA", payload: null })
       }
     })()
   }, [state.temporaryData, dispatch])
@@ -71,69 +72,72 @@ export const CreateNote = () => {
   }
 
   return (
-    <div className="createNote">
-      <div className="createNoteFirstRow">
-        <input
-          className="createNoteInput createNoteInputTitle"
-          name="title"
-          placeholder="Title"
-          value={newPostTitle}
-          onChange={(e) => setNewPostTitle(e.target.value)}
-        />
-        <button
-          className="createNoteBtn"
-          name="add note"
-          onClick={() => {
-            addNoteHandler()
-            setNewPostTitle('')
-            setNewPostContent('')
-            setNoteColor('#ffffff')
-            setPinBtn(false)
-          }}
-        >
-          Add
-        </button>
-        <button
-          onClick={colorChosen}
-          name="red"
-          className="createNoteColorBtn red"
-        ></button>
-        <button
-          onClick={colorChosen}
-          name="green"
-          className="createNoteColorBtn green"
-        ></button>
-        <button
-          onClick={colorChosen}
-          name="blue"
-          className="createNoteColorBtn blue"
-        ></button>
-        <button
-          onClick={colorChosen}
-          name="yellow"
-          className="createNoteColorBtn yellow"
-        ></button>
-        <button
-          onClick={colorChosen}
-          name="white"
-          className="createNoteColorBtn white"
-        ></button>
-        <button
-          className="createNoteBtn"
-          name="pin note"
-          onClick={() => setPinBtn(!pinBtn)}
-        >
-          Pin
-        </button>
+    <div className='sidebarAndCreateNote'>
+      <Sidebar />
+      <div className="createNote">
+        <div className="createNoteFirstRow">
+          <input
+            className="createNoteInput createNoteInputTitle"
+            name="title"
+            placeholder="Title"
+            value={newPostTitle}
+            onChange={(e) => setNewPostTitle(e.target.value)}
+          />
+          <button
+            className="createNoteBtn"
+            name="add note"
+            onClick={() => {
+              addNoteHandler()
+              setNewPostTitle('')
+              setNewPostContent('')
+              setNoteColor('#ffffff')
+              setPinBtn(false)
+            }}
+          >
+            Add
+          </button>
+          <button
+            onClick={colorChosen}
+            name="red"
+            className="createNoteColorBtn red"
+          ></button>
+          <button
+            onClick={colorChosen}
+            name="green"
+            className="createNoteColorBtn green"
+          ></button>
+          <button
+            onClick={colorChosen}
+            name="blue"
+            className="createNoteColorBtn blue"
+          ></button>
+          <button
+            onClick={colorChosen}
+            name="yellow"
+            className="createNoteColorBtn yellow"
+          ></button>
+          <button
+            onClick={colorChosen}
+            name="white"
+            className="createNoteColorBtn white"
+          ></button>
+          <button
+            className="createNoteBtn"
+            name="pin note"
+            onClick={() => setPinBtn(!pinBtn)}
+          >
+            Pin
+          </button>
+        </div>
+        <textarea
+          className="createNoteInput createNoteInputContent"
+          name="content"
+          value={newPostContent}
+          placeholder="Content"
+          ref={contentFocus}
+          onChange={(e) => setNewPostContent(e.target.value)}
+        ></textarea>
       </div>
-      <textarea
-        className="createNoteInput createNoteInputContent"
-        name="content"
-        value={newPostContent}
-        placeholder="Content"
-        ref={contentFocus}
-        onChange={(e) => setNewPostContent(e.target.value)}
-      ></textarea>
     </div>
   )
 }

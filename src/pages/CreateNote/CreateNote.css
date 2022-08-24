@@ -1,7 +1,11 @@
+.sidebarAndCreateNote {
+    display: flex;
+    justify-content: space-between;
+}
+
 .createNote {
-    width: 80%;
-    position: absolute;
-    left: 17rem;
+    width: 90%;
+    margin-left: 10rem;
 }
 
 .createNoteInput {
@@ -13,11 +17,11 @@
 }
 
 .createNoteInputTitle {
-    width: 65%;
+    width: 60%;
 }
 
 .createNoteInputContent {
-    width: 90%;
+    width: 80%;
     height: 80vh;
 }
 

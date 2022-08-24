@@ -1,6 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@250&display=swap');
 
+:root {
+  --primary-color: #3490DE;
+  --primary-dark: #0D1117;
+  --dark-grey: #374151;
+  --off-grey: #B7B7A4;
+  --off-white: #F3F4F6;
+  --white: #FFFFFF;
+}
+
 .App {
   font-family: 'Roboto', sans-serif;
-  display: flex;
 }

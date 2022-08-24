@@ -1,3 +1,8 @@
+.sidebarAndHomepage {
+    display: flex;
+    justify-content: space-between;
+}
+
 .homepage {
     display: flex;
     flex-wrap: wrap;

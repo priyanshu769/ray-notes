@@ -1,7 +1,7 @@
 import './Homepage.css'
 import { useState, useEffect } from 'react'
 import { useApp } from '../../contexts/AppContext'
-import { TakeNote, Note } from '../../components/index'
+import { TakeNote, Note, Sidebar } from '../../components/index'
 import { useNavigate } from 'react-router'
 import axios from 'axios'
 
@@ -41,7 +41,7 @@ export const Homepage = () => {
     }
   }
   useEffect(() => {
-    ;(async () => {
+    ; (async () => {
       try {
         const notesRes = await axios.get(
           'https://raynotes-api.herokuapp.com/notes',
@@ -57,7 +57,7 @@ export const Homepage = () => {
   }, [state.loggedInToken, dispatch])
 
   useEffect(() => {
-    ;(() => {
+    ; (() => {
       if (newPostContent.length > 128) {
         dispatch({
           type: 'SET_TEMPORARY_DATA',
@@ -100,14 +100,14 @@ export const Homepage = () => {
     }
   }
 
-  const deleteNoteHandler = async(noteId) => {
-    try{
+  const deleteNoteHandler = async (noteId) => {
+    try {
       const deleteNote = await axios.delete(`https://raynotes-api.herokuapp.com/notes/${noteId}`, { headers: { Authorization: state.loggedInToken } })
       console.log(deleteNote)
-      if (deleteNote.data.success){
+      if (deleteNote.data.success) {
         dispatch({ type: 'DELETE_NOTE', payload: deleteNote.data.note })
       }
-    } catch (error){
+    } catch (error) {
       console.log(error)
     }
   }
@@ -120,85 +120,88 @@ export const Homepage = () => {
     .reverse()
 
   return (
-    <div className="homepage">
-      <TakeNote
-        onTitleChange={(e) => setNewPostTitle(e.target.value)}
-        onContentChange={(e) => setNewPostContent(e.target.value)}
-        pinBtnClick={() => setPinBtn(!pinBtn)}
-        textareaHeight={autoTextareaHeight()}
-        pinBtn={pinBtn ? 'pinOn addNoteBtn' : 'pinOff addNoteBtn'}
-        colorChosen={colorChosen}
-        takeNoteColor={noteColor}
-        titleValue={newPostTitle}
-        contentValue={newPostContent}
-        addNoteBtnClick={() => {
-          addNoteHandler()
-          setNewPostTitle('')
-          setNewPostContent('')
-          setPinBtn(false)
-          setNoteColor('#ffffff')
-        }}
-      />
-      {pinnedNotes.map((note) => {
-        return (
-          <Note
-            title={
-              note.title.length <= 20
-                ? note.title
-                : `${note.title.slice(0, 15)}...`
-            }
-            content={
-              note.content.length <= 128
-                ? note.content
-                : note.content.slice(0, 160)
-            }
-            noteId={note._id}
-            contentLength={note.content.length}
-            noteBg={note.color}
-            pinned={note.pinned}
-            // editBtnClick={() => {
-            //   setNewPostTitle(note.title)
-            //   setNewPostContent(note.content)
-            //   setNoteColor(note.color)
-            //   setPinBtn(note.pinned)
-            //   dispatch({ type: 'DELETE_NOTE', payload: note })
-            // }}
-            deleteBtnClick={() =>
-              deleteNoteHandler(note._id)
-            }
-          />
-        )
-      })}
-      {unPinnedNotes.map((note) => {
-        return (
-          <Note
-            title={
-              note.title.length <= 20
-                ? note.title
-                : `${note.title.slice(0, 15)}...`
-            }
-            content={
-              note.content.length <= 128
-                ? note.content
-                : note.content.slice(0, 160)
-            }
-            noteId={note._id}
-            contentLength={note.content.length}
-            noteBg={note.color}
-            pinned={note.pinned}
-            // editBtnClick={() => {
-            //   setNewPostTitle(note.title)
-            //   setNewPostTitle(note.content)
-            //   setNoteColor(note.color)
-            //   setPinBtn(note.pinned)
-            //   dispatch({ type: 'DELETE_NOTE', payload: note })
-            // }}
-            deleteBtnClick={() =>
-              deleteNoteHandler(note._id)
-            }
-          />
-        )
-      })}
+    <div className='sidebarAndHomepage'>
+      <Sidebar />
+      <div className="homepage">
+        <TakeNote
+          onTitleChange={(e) => setNewPostTitle(e.target.value)}
+          onContentChange={(e) => setNewPostContent(e.target.value)}
+          pinBtnClick={() => setPinBtn(!pinBtn)}
+          textareaHeight={autoTextareaHeight()}
+          pinBtn={pinBtn ? 'pinOn addNoteBtn' : 'pinOff addNoteBtn'}
+          colorChosen={colorChosen}
+          takeNoteColor={noteColor}
+          titleValue={newPostTitle}
+          contentValue={newPostContent}
+          addNoteBtnClick={() => {
+            addNoteHandler()
+            setNewPostTitle('')
+            setNewPostContent('')
+            setPinBtn(false)
+            setNoteColor('#ffffff')
+          }}
+        />
+        {pinnedNotes.map((note) => {
+          return (
+            <Note
+              title={
+                note.title.length <= 20
+                  ? note.title
+                  : `${note.title.slice(0, 15)}...`
+              }
+              content={
+                note.content.length <= 128
+                  ? note.content
+                  : note.content.slice(0, 160)
+              }
+              noteId={note._id}
+              contentLength={note.content.length}
+              noteBg={note.color}
+              pinned={note.pinned}
+              // editBtnClick={() => {
+              //   setNewPostTitle(note.title)
+              //   setNewPostContent(note.content)
+              //   setNoteColor(note.color)
+              //   setPinBtn(note.pinned)
+              //   dispatch({ type: 'DELETE_NOTE', payload: note })
+              // }}
+              deleteBtnClick={() =>
+                deleteNoteHandler(note._id)
+              }
+            />
+          )
+        })}
+        {unPinnedNotes.map((note) => {
+          return (
+            <Note
+              title={
+                note.title.length <= 20
+                  ? note.title
+                  : `${note.title.slice(0, 15)}...`
+              }
+              content={
+                note.content.length <= 128
+                  ? note.content
+                  : note.content.slice(0, 160)
+              }
+              noteId={note._id}
+              contentLength={note.content.length}
+              noteBg={note.color}
+              pinned={note.pinned}
+              // editBtnClick={() => {
+              //   setNewPostTitle(note.title)
+              //   setNewPostTitle(note.content)
+              //   setNoteColor(note.color)
+              //   setPinBtn(note.pinned)
+              //   dispatch({ type: 'DELETE_NOTE', payload: note })
+              // }}
+              deleteBtnClick={() =>
+                deleteNoteHandler(note._id)
+              }
+            />
+          )
+        })}
+      </div>
     </div>
   )
 }

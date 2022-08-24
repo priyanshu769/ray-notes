@@ -2,6 +2,7 @@ import './FullNote.css'
 import { useApp } from '../../contexts/AppContext'
 import { useParams } from 'react-router'
 import axios from 'axios'
+import { Sidebar } from '../../components'
 
 export const FullNote = () => {
   const { state, dispatch } = useApp()
@@ -24,17 +25,20 @@ export const FullNote = () => {
   }
 
   return (
-    <div className="fullNote">
-      <div className="fullNoteHeading">
-        <h4 className="fullNoteTitle">{noteToShow.title}</h4>
-        <button
-          className="fullNoteBtn"
-          onClick={() => deleteNoteHandler(noteToShow._id)}
-        >
-          Delete
-        </button>
+    <div className='sidebarAndFullnote'>
+      <Sidebar />
+      <div className="fullNote">
+        <div className="fullNoteHeading">
+          <h4 className="fullNoteTitle">{noteToShow.title}</h4>
+          <button
+            className="fullNoteBtn"
+            onClick={() => deleteNoteHandler(noteToShow._id)}
+          >
+            Delete
+          </button>
+        </div>
+        <p className="fullNoteContent">{noteToShow.content}</p>
       </div>
-      <p className="fullNoteContent">{noteToShow.content}</p>
     </div>
   )
 }
