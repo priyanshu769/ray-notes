@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useApp } from '../../contexts/AppContext'
 import { LoadingSmall } from '../../components'
+import toast from 'react-hot-toast'
 
 export const Signup = () => {
   const [name, setName] = useState('')
@@ -12,7 +13,6 @@ export const Signup = () => {
   const [rePassword, setRePassword] = useState('')
   const [showPass, setShowPass] = useState(false)
   const [loader, setLoader] = useState(false)
-  const [loading, setLoading] = useState('')
   const { dispatch } = useApp()
   const navigate = useNavigate()
   const checkCredentials = (name, email, password, rePassword) => {
@@ -21,21 +21,22 @@ export const Signup = () => {
         if (password.length > 5) {
           if (password === rePassword) {
             return true
-          } else setLoading('Passwords does not match.')
+          } else toast.error('Passwords does not match.')
         } else {
-          setLoading('Password must 6 characters or long.')
+          toast.error('Password must 6 characters or long.')
           return false
         }
       } else {
-        setLoading('Enter a Valid email.')
+        toast.error('Enter a Valid email.')
         return false
       }
     } else {
-      setLoading('Name must be greater than two characters.')
+      toast.error('Name must be greater than two characters.')
       return false
     }
   }
   const executeIfSignedUp = (signedUp) => {
+    toast.success('Signed Up Successfully!')
     dispatch({
       type: 'SET_PROFILE',
       payload: {
@@ -57,12 +58,17 @@ export const Signup = () => {
     const newUser = { name: name, email: email, password: password }
     if (checkCredentials(name, email, password, rePassword)) {
       setLoader(true)
+      toast('Signing You Up!', {
+        icon: '⌛',
+      });
       try {
         const signedUp = await axios.post(
           'https://raynotes-api.herokuapp.com/signup',
           newUser,
         )
-        signedUp.data.success && executeIfSignedUp(signedUp)
+        if(signedUp.data.success){
+          executeIfSignedUp(signedUp)
+        }
       } catch (error) {
         console.log(error)
       }
@@ -71,7 +77,6 @@ export const Signup = () => {
   return (
     <div className="loginSignupBox">
       <h2>Sign Up</h2>
-      {loading.length > 0 && <p>{loading}</p>}
       <input
         value={name}
         onChange={(e) => setName(e.target.value)}

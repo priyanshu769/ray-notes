@@ -3,9 +3,12 @@ import { useState, useEffect, useRef } from 'react'
 import { useApp } from '../../contexts/AppContext'
 import axios from 'axios'
 import { Sidebar } from '../../components'
+import toast from 'react-hot-toast'
+import { useNavigate } from 'react-router'
 
 export const CreateNote = () => {
   const { state, dispatch } = useApp()
+  const navigate = useNavigate()
   const contentFocus = useRef()
   const [newPostTitle, setNewPostTitle] = useState('')
   const [newPostContent, setNewPostContent] = useState('')
@@ -25,6 +28,9 @@ export const CreateNote = () => {
     }
     if (e.target.name === 'yellow') {
       return setNoteColor('#f9ed69')
+    }
+    if (e.target.name === 'white') {
+      return setNoteColor('#ffffff')
     }
   }
 
@@ -55,17 +61,21 @@ export const CreateNote = () => {
         userId: state.profile.userId,
       },
     }
-    console.log(noteToAdd)
+    toast('Adding Note!', {
+      icon: '⌛',
+      duration: 2000
+    });
     try {
       const noteAdded = await axios.post(
         'https://raynotes-api.herokuapp.com/notes',
         noteToAdd,
         { headers: { Authorization: state.loggedInToken } },
       )
-      console.log(noteAdded)
       if (noteAdded.data.success) {
         dispatch({ type: 'ADD_NOTE', payload: noteAdded.data.noteAdded })
-      }
+        toast.success('Note Added!')
+        navigate(`/note/${noteAdded.data.noteAdded._id}`)
+      } else toast.error('Unable to Add Note!')
     } catch (error) {
       console.log(error)
     }
@@ -74,7 +84,7 @@ export const CreateNote = () => {
   return (
     <div className='sidebarAndCreateNote'>
       <Sidebar />
-      <div className="createNote">
+      <div style={{ backgroundColor: noteColor }} className="createNote">
         <div className="createNoteFirstRow">
           <input
             className="createNoteInput createNoteInputTitle"
@@ -122,7 +132,7 @@ export const CreateNote = () => {
             className="createNoteColorBtn white"
           ></button>
           <button
-            className="createNoteBtn"
+            className={pinBtn ? 'pinOn addNoteBtn' : 'pinOff addNoteBtn'}
             name="pin note"
             onClick={() => setPinBtn(!pinBtn)}
           >

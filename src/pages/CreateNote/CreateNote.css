@@ -4,7 +4,8 @@
 }
 
 .createNote {
-    width: 90%;
+    border: 1px solid var(--off-grey);
+    width: 80%;
     margin-left: 10rem;
 }
 
@@ -21,7 +22,7 @@
 }
 
 .createNoteInputContent {
-    width: 80%;
+    width: 90%;
     height: 80vh;
 }
 

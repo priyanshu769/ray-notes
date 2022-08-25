@@ -4,13 +4,13 @@ import axios from 'axios'
 import { useApp } from '../../contexts/AppContext'
 import { Link } from 'react-router-dom'
 import { LoadingSmall } from '../../components'
+import toast from 'react-hot-toast'
 
 export const Login = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [showPass, setShowPass] = useState(false)
   const [loader, setLoader] = useState(false)
-  const [loading, setLoading] = useState('')
   const { dispatch } = useApp()
 
   useEffect(() => {
@@ -46,20 +46,24 @@ export const Login = () => {
     if (email.includes('@') && !email.includes(' ')) {
       return true
     } else {
-      setLoading('Enter a Valid email.')
+      toast.error('Enter a valid email.')
       return false
     }
   }
 
   const loginUser = async () => {
     if (checkCredentials(email)) {
+      toast('Logging In!', {
+        icon: '⌛',
+      });
+      setLoader(true)
       try {
-        setLoader(true)
         const loggedInRes = await axios.post(
           'https://raynotes-api.herokuapp.com/login',
           { email: email, password: password },
         )
         if (loggedInRes.data.success === true) {
+          toast.success('Logged In')
           dispatch({
             type: 'SET_PROFILE',
             payload: {
@@ -88,7 +92,6 @@ export const Login = () => {
   return (
     <div className="loginSignupBox">
       <h2>Log In</h2>
-      {loading && <p>{loading}</p>}
       <input
         className="inputBox"
         placeholder="Email"

@@ -4,6 +4,8 @@ import { useApp } from '../../contexts/AppContext'
 import { TakeNote, Note, Sidebar } from '../../components/index'
 import { useNavigate } from 'react-router'
 import axios from 'axios'
+import toast from 'react-hot-toast'
+
 
 export const Homepage = () => {
   const { state, dispatch } = useApp()
@@ -12,7 +14,6 @@ export const Homepage = () => {
   const [newPostContent, setNewPostContent] = useState('')
   const [noteColor, setNoteColor] = useState('#ffffff')
   const [pinBtn, setPinBtn] = useState(false)
-  // const [noteAddedStatus, setNoteAddedStatus] = useState(null)
   const autoTextareaHeight = () => {
     if (newPostContent.length < 128) {
       return '9rem'
@@ -84,30 +85,39 @@ export const Homepage = () => {
         userId: state.profile.userId,
       },
     }
-    console.log(noteToAdd)
+    toast('Adding Note!', {
+      icon: '⌛',
+      duration: 2000
+    });
     try {
       const noteAdded = await axios.post(
         'https://raynotes-api.herokuapp.com/notes',
         noteToAdd,
         { headers: { Authorization: state.loggedInToken } },
       )
-      console.log(noteAdded)
       if (noteAdded.data.success) {
         dispatch({ type: 'ADD_NOTE', payload: noteAdded.data.noteAdded })
-      }
+        toast.success('Note Added!')
+      } else toast.error('Unable to Add Note!')
     } catch (error) {
+      toast.error('Error Adding Note!')
       console.log(error)
     }
   }
 
   const deleteNoteHandler = async (noteId) => {
+    toast('Deleting Note!', {
+      icon: '⌛',
+      duration: 2000
+    });
     try {
       const deleteNote = await axios.delete(`https://raynotes-api.herokuapp.com/notes/${noteId}`, { headers: { Authorization: state.loggedInToken } })
-      console.log(deleteNote)
       if (deleteNote.data.success) {
         dispatch({ type: 'DELETE_NOTE', payload: deleteNote.data.note })
-      }
+        toast.success('Note Deleted!')
+      } else toast.error('Unable to Delete Note!')
     } catch (error) {
+      toast.error('Error Deleting Note!')
       console.log(error)
     }
   }
