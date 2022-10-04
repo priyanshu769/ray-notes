@@ -1,0 +1,6 @@
+export { PrivacyPolicy } from './PrivacyPolicy/PrivacyPolicy'
+export { Homepage } from './Homepage/Homepage'
+export { CreateNote } from './CreateNote/CreateNote'
+export { FullNote } from './FullNote/FullNote'
+export { Login } from './LoginSignup/Login'
+export { Signup } from './LoginSignup/Signup'

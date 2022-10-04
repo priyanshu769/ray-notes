@@ -1,0 +1,21 @@
+.navBtn {
+  min-width: 10rem;
+  padding: 0.3rem;
+  margin: 0.5rem;
+  border-radius: 0.3rem;
+  border: none;
+  background-color: var(--primary-color);
+  cursor: pointer;
+}
+
+.profileName {
+  font-size: larger;
+  font-weight: 900;
+}
+
+.noteTitleBtn {
+  cursor: pointer;
+  background: none;
+  border: none;
+  border-bottom: 2px solid #000000;
+}

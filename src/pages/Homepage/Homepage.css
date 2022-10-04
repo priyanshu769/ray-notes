@@ -1,0 +1,15 @@
+.sidebarAndHomepage {
+    display: flex;
+    justify-content: space-between;
+}
+
+.homepage {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: center;
+    position: absolute;
+    left: 17rem;
+    margin: auto;
+    width: 80%;
+}

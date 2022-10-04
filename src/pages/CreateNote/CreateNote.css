@@ -1,0 +1,51 @@
+.sidebarAndCreateNote {
+    display: flex;
+    justify-content: space-between;
+}
+
+.createNote {
+    border: 1px solid var(--off-grey);
+    width: 80%;
+    margin-left: 10rem;
+}
+
+.createNoteInput {
+    padding: 0.5rem 1rem;
+    margin: 0.5rem;
+    background-color: transparent;
+    color: #000000;
+    border: 1px solid #000000;
+}
+
+.createNoteInputTitle {
+    width: 60%;
+}
+
+.createNoteInputContent {
+    width: 90%;
+    height: 80vh;
+}
+
+.createNoteBtn {
+    width: 4rem;
+    padding: 0.3rem;
+    margin: 1px;
+    background-color: #000000;
+    color: #ffffff;
+    border-radius: 10%;
+    cursor: pointer;
+}
+
+/* Color Buttons */
+
+.createNoteColorBtn {
+    cursor: pointer;
+    padding: 1rem;
+    border-radius: 100%;
+    border: 1px solid #000000;
+    margin: 5px 2px;
+}
+
+.createNoteColorBtn:focus {
+    border-radius: 100%;
+}
